@@ -1,0 +1,27 @@
+{
+  "name": "cogo-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+    "type": "module",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LEPII/cogo-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LEPII/cogo-backend/issues"
+  },
+  "homepage": "https://github.com/LEPII/cogo-backend#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
