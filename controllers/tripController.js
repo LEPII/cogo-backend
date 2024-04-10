@@ -2,6 +2,10 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function getUserTrips(req, res) {
+    const userEmail = req.body.userEmail
+    if (!userEmail) {
+        return res.status(404).json('No user email provided')
+    }
     try {
         // const activities = await prisma.activity.findMany()
         // if (!activities) {

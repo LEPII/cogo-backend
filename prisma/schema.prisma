@@ -29,20 +29,20 @@ model User {
   FriendInviteReceiver     FriendInvite[] @relation("FriendInviteReceiver")
   TripInvite               TripInvite[]
   friends                  Json?
+  tripMember               TripMember[]
 }
 
-// model Friend {
-//   friendOneId String
-//   friendOne   User     @relation(fields: [friendOneId], references: [id], name: "FriendOne")
-//   friendTwoId String
-//   friendTwo   User     @relation(fields: [friendTwoId], references: [id], name: "FriendTwo")
-//   createdAt   DateTime @default(now())
+model TripMember {
+  experienceId String
+  experience   Experience @relation(fields: [experienceId], references: [id])
+  userId       String
+  user         User       @relation(fields: [userId], references: [id])
 
-//   @@id([friendOneId, friendTwoId])
-// }
+  @@id([experienceId, userId])
+}
 
 model Experience {
-  id           String   @id @default(cuid())
+  id           String       @id @default(cuid())
   name         String
   cost         Float
   time         DateTime
@@ -50,7 +50,8 @@ model Experience {
   description  String
   Trip         Trip[]
   activityName String
-  activity     Activity @relation(fields: [activityName], references: [name])
+  activity     Activity     @relation(fields: [activityName], references: [name])
+  tripMember   TripMember[]
 }
 
 model Trip {
