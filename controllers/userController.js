@@ -5,7 +5,6 @@ export async function getUserInfo(req, res) {
     const userEmail = req.query.userEmail
     if (!userEmail) {
         return res.status(404).json("No email provided")
-        
     }
     try {
         const user = await prisma.user.findUnique({
@@ -36,8 +35,8 @@ export async function createUser(req, res) {
     const transportation = req.body.transportation
     const transportationCap = req.body.transportationCap
     const interests = req.body.interests
-    if (!newUserInfo || !req.body.email) {
-        res.status(404).json("Unsufficient user data provided")
+    if (!newUserInfo || !newUserEmail || !displayName || !location || !radius || !password || !transportation) {
+        return res.status(404).json("Unsufficient user data provided")
     }
     try {
         const newUser = await prisma.user.findUnique({
@@ -58,13 +57,13 @@ export async function createUser(req, res) {
                     interests: interests,
                 }
             })
-            res.status(201).json("User successfully created");
+            return res.status(201).json("User successfully created");
         } else {
-            res.status(401).json("User already exists")
+            return res.status(401).json("User already exists")
         }
     } catch (e) {
         console.error(e);
-        res.status(401).json(`An error occurred while creating account. ${e}`);
+        return res.status(401).json(`An error occurred while creating account. ${e}`);
     } finally {
         await prisma.$disconnect();
     }
