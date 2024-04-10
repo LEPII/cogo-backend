@@ -23,24 +23,23 @@ model User {
   transportation           Boolean
   transportationCap        Int
   interests                Json
-  FriendOne                Friend[]       @relation("FriendOne")
-  FriendTwo                Friend[]       @relation("FriendTwo")
   HostRelation             Trip[]         @relation("HostRelation")
   DesignatedDriverRelation Trip[]         @relation("DesignatedDriverRelation")
   FriendInviteSender       FriendInvite[] @relation("FriendInviteSender")
   FriendInviteReceiver     FriendInvite[] @relation("FriendInviteReceiver")
   TripInvite               TripInvite[]
+  friends                  Json?
 }
 
-model Friend {
-  friendOneId String
-  friendOne   User     @relation(fields: [friendOneId], references: [id], name: "FriendOne")
-  friendTwoId String
-  friendTwo   User     @relation(fields: [friendTwoId], references: [id], name: "FriendTwo")
-  createdAt   DateTime @default(now())
+// model Friend {
+//   friendOneId String
+//   friendOne   User     @relation(fields: [friendOneId], references: [id], name: "FriendOne")
+//   friendTwoId String
+//   friendTwo   User     @relation(fields: [friendTwoId], references: [id], name: "FriendTwo")
+//   createdAt   DateTime @default(now())
 
-  @@id([friendOneId, friendTwoId])
-}
+//   @@id([friendOneId, friendTwoId])
+// }
 
 model Experience {
   id           String   @id @default(cuid())
@@ -58,24 +57,17 @@ model Trip {
   id                 String       @id @default(cuid())
   hostId             String
   host               User         @relation(name: "HostRelation", fields: [hostId], references: [id])
-  designatedDriverId String
-  designatedDriver   User         @relation(name: "DesignatedDriverRelation", fields: [designatedDriverId], references: [id])
+  designatedDriverId String?
+  designatedDriver   User?        @relation(name: "DesignatedDriverRelation", fields: [designatedDriverId], references: [id])
   capacity           Int
   budget             Float
   experienceId       String
   experience         Experience   @relation(fields: [experienceId], references: [id])
   friendsOnly        Boolean
-  chatId             String
-  chat               Chat         @relation(fields: [chatId], references: [id])
   members            Json
   name               String
   TripInvite         TripInvite[]
-}
-
-model Chat {
-  id       String @id @default(cuid())
-  messages Json
-  Trip     Trip[]
+  chat               Json?
 }
 
 model TripInvite {
