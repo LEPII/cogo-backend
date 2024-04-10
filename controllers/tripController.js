@@ -2,16 +2,17 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function getUserTrips(req, res) {
-    const userEmail = req.body.userEmail
-    if (!userEmail) {
-        return res.status(404).json('No user email provided')
+    const userId = req.query.userId
+    if (!userId) {
+        return res.status(404).json('No user id provided')
     }
     try {
-        // const activities = await prisma.activity.findMany()
-        // if (!activities) {
-        //     return res.status(404).json("No activities in database")
-        // }
-        return res.status(200).json('route working')
+        const userTrips = await prisma.tripMember.findMany({
+            where: {
+                userId: userId
+            }
+        })
+        return res.status(200).json(userTrips)
     } catch (e) {
         console.error(e)
         return res.status(404).json(e)
