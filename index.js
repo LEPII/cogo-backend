@@ -1,13 +1,18 @@
 import 'dotenv/config'
 import express from 'express';
+import cors from 'cors';
 import { router as userRoute } from './routes/userRoute.js'
 import { router as friendRoute } from './routes/friendRoute.js'
 import { router as tripRoute } from './routes/tripRoute.js'
 import { router as experienceRoute } from './routes/experienceRoute.js'
 import { router as chatRoute } from './routes/chatRoute.js'
+import { router as activityRoute } from './routes/activityRoute.js'
 
-const app = express()
 const port = process.env.PORT || 9000;
+const app = express()
+
+app.use(cors())
+app.use(express.json())
 
 app.use("/api/user", userRoute)
 app.use("/api/friend", friendRoute)

@@ -2,6 +2,6 @@ import express from 'express';
 
 const router = express.Router()
 
- .get(getActivityInfo)
+    .get(getActivityInfo)
 
 export { router }
