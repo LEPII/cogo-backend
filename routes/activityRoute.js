@@ -1,7 +1,12 @@
-// import express from 'express';
+import express from 'express';
+import { getAllActivities, getSomeActivities } from '../controllers/activityController.js';
 
-// const router = express.Router()
+const router = express.Router()
 
-//     .get(getActivityInfo)
+router.route("/")
+    .get(getAllActivities)
 
-// export { router }
+router.route("/some")
+    .get(getSomeActivities)
+
+export { router }
