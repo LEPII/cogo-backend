@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                       String         @id @default(cuid())
+  displayName              String         @unique
+  email                    String         @unique
+  location                 String
+  radius                   Int
+  password                 String
+  transportation           Boolean
+  transportationCap        Int
+  interests                Json
+  FriendOne                Friend[]       @relation("FriendOne")
+  FriendTwo                Friend[]       @relation("FriendTwo")
+  HostRelation             Trip[]         @relation("HostRelation")
+  DesignatedDriverRelation Trip[]         @relation("DesignatedDriverRelation")
+  FriendInviteSender       FriendInvite[] @relation("FriendInviteSender")
+  FriendInviteReceiver     FriendInvite[] @relation("FriendInviteReceiver")
+  TripInvite               TripInvite[]
+}
+
+model Friend {
+  friendOneId String
+  friendOne   User     @relation(fields: [friendOneId], references: [id], name: "FriendOne")
+  friendTwoId String
+  friendTwo   User     @relation(fields: [friendTwoId], references: [id], name: "FriendTwo")
+  createdAt   DateTime @default(now())
+
+  @@id([friendOneId, friendTwoId])
+}
+
+model Experience {
+  id           String   @id @default(cuid())
+  name         String
+  cost         Float
+  time         DateTime
+  location     String
+  description  String
+  Trip         Trip[]
+  activityName String
+  activity     Activity @relation(fields: [activityName], references: [name])
+}
+
+model Trip {
+  id                 String       @id @default(cuid())
+  hostId             String
+  host               User         @relation(name: "HostRelation", fields: [hostId], references: [id])
+  designatedDriverId String
+  designatedDriver   User         @relation(name: "DesignatedDriverRelation", fields: [designatedDriverId], references: [id])
+  capacity           Int
+  budget             Float
+  experienceId       String
+  experience         Experience   @relation(fields: [experienceId], references: [id])
+  friendsOnly        Boolean
+  chatId             String
+  chat               Chat         @relation(fields: [chatId], references: [id])
+  TripInvite         TripInvite[]
+}
+
+model Chat {
+  id       String @id @default(cuid())
+  messages Json
+  Trip     Trip[]
+}
+
+model TripInvite {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  tripId    String
+  trip      Trip     @relation(fields: [tripId], references: [id])
+  senderId  String
+  sender    User     @relation(fields: [senderId], references: [id])
+}
+
+model FriendInvite {
+  id         String   @id @default(cuid())
+  pending    Boolean
+  accepted   Boolean
+  createdAt  DateTime
+  senderId   String
+  sender     User     @relation("FriendInviteSender", fields: [senderId], references: [id])
+  receiverId String
+  receiver   User     @relation("FriendInviteReceiver", fields: [receiverId], references: [id])
+}
+
+model Activity {
+  name             String       @unique
+  outdoors         Boolean
+  indoors          Boolean
+  timeSensitive    Boolean
+  weatherDependent Boolean
+  Experience       Experience[]
+}
