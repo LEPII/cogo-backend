@@ -4,7 +4,7 @@ import cors from 'cors';
 import { router as userRoute } from './routes/userRoute.js'
 // import { router as friendRoute } from './routes/friendRoute.js'
 // import { router as tripRoute } from './routes/tripRoute.js'
-// import { router as experienceRoute } from './routes/experienceRoute.js'
+import { router as experienceRoute } from './routes/experienceRoute.js'
 // import { router as chatRoute } from './routes/chatRoute.js'
 import { router as activityRoute } from './routes/activityRoute.js'
 
@@ -17,7 +17,7 @@ app.use(express.json())
 app.use("/api/user", userRoute)
 // app.use("/api/friend", friendRoute)
 // app.use("/api/trip", tripRoute)
-// app.use("/api/experience", experienceRoute)
+app.use("/api/experience", experienceRoute)
 app.use("/api/activity", activityRoute)
 // app.use("/api/chat", chatRoute)
 
