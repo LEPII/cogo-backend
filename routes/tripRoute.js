@@ -1,13 +1,13 @@
-import express from 'express';
+// import express from 'express';
 
-const router = express.Router()
+// const router = express.Router()
 
-router
-    .route('/')
-    .get(getTrip)
-    .post(createTrip)
-    .post(createTripInvite)
-    .patch(updateTrip)
-    .delete(deleteTrip)
+// router
+//     .route('/')
+//     .get(getTrip)
+//     .post(createTrip)
+//     .post(createTripInvite)
+//     .patch(updateTrip)
+//     .delete(deleteTrip)
 
-export { router }
+// export { router }

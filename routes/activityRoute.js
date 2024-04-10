@@ -1,7 +1,7 @@
-import express from 'express';
+// import express from 'express';
 
-const router = express.Router()
+// const router = express.Router()
 
-    .get(getActivityInfo)
+//     .get(getActivityInfo)
 
-export { router }
+// export { router }

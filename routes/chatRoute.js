@@ -1,12 +1,12 @@
-import express from 'express';
+// import express from 'express';
 
-const router = express.Router()
+// const router = express.Router()
 
-router
-    .route("/")
-    .get(getChatInfo)
-    .post(createChatRoom)
-    .post(createMessage)
-    .delete(deleteChatRoom)
+// router
+//     .route("/")
+//     .get(getChatInfo)
+//     .post(createChatRoom)
+//     .post(createMessage)
+//     .delete(deleteChatRoom)
 
-export { router }
+// export { router }
