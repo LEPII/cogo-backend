@@ -8,6 +8,9 @@
     "dev": "nodemon index.js",
     "test": "test"
   },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LEPII/cogo-backend.git"

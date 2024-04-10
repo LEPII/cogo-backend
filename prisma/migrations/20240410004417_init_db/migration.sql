@@ -85,7 +85,9 @@ CREATE TABLE "Activity" (
     "outdoors" BOOLEAN NOT NULL,
     "indoors" BOOLEAN NOT NULL,
     "timeSensitive" BOOLEAN NOT NULL,
-    "weatherDependent" BOOLEAN NOT NULL
+    "weatherDependent" BOOLEAN NOT NULL,
+
+    CONSTRAINT "Activity_pkey" PRIMARY KEY ("name")
 );
 
 -- CreateIndex
@@ -93,9 +95,6 @@ CREATE UNIQUE INDEX "User_displayName_key" ON "User"("displayName");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Activity_name_key" ON "Activity"("name");
 
 -- AddForeignKey
 ALTER TABLE "Friend" ADD CONSTRAINT "Friend_friendOneId_fkey" FOREIGN KEY ("friendOneId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

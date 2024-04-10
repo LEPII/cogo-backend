@@ -45,7 +45,6 @@ async function main() {
         { "name": "Concert", "outdoors": true, "indoors": true, "timeSensitive": true, "weatherDependent": true },
         { "name": "Festival", "outdoors": true, "indoors": false, "timeSensitive": false, "weatherDependent": false },
         { "name": "Community", "outdoors": false, "indoors": false, "timeSensitive": true, "weatherDependent": true },
-        // { "name": "", "outdoors": false, "indoors": false, "timeSensitive": false, "weatherDependent": false },
     ]
     const experienceArr = [
         { "name": "Pottery Class Event", "cost": 97.15, "time": "2024-05-01T17:40:23Z", "location": "Millennium Park, Chicago", "description": "Get creative and mold your own pottery pieces in this artistic class.", "activityName": "Pottery Class" },
@@ -78,41 +77,59 @@ async function main() {
         { "name": "Hot Air Balloon Ride Event", "cost": 250.0, "time": "2024-05-24T17:40:23Z", "location": "Zilker Park, Austin", "description": "Experience breathtaking views from above in a hot air balloon ride.", "activityName": "Hot Air Balloon Ride" },
         { "name": "Kayaking Event", "cost": 55.22, "time": "2024-05-10T17:40:23Z", "location": "Golden Gate Park, SF", "description": "Paddle through serene waters and connect with nature on a kayaking adventure.", "activityName": "Kayaking" },
         { "name": "Indoor Rock Climbing Event", "cost": 40.25, "time": "2024-05-21T17:40:23Z", "location": "Central Park, NYC", "description": "Challenge yourself and reach new heights with indoor rock climbing.", "activityName": "Indoor Rock Climbing" },
-        { "name": "Birthday Bash", "cost": 200.00, "time": "2024-05-15T18:00:00", "location": "Central Park", "description": "Celebrate Sarah's birthday with food, drinks, and games in the park.", "activityName": "Picnic" },
-        { "name": "Summer BBQ Cookout", "cost": 100.00, "time": "2024-06-22T15:00:00", "location": "John's Backyard", "description": "Join us for a backyard barbecue with grilled favorites and fun outdoor games.", "activityName": "Cooking Class" },
-        { "name": "Art Exhibition Opening", "cost": 0.00, "time": "2024-07-10T19:00:00", "location": "Downtown Gallery", "description": "Explore new artworks by local artists at the gallery opening reception.", "activityName": "Art Gallery Hop" },
-        { "name": "Sunset Cruise", "cost": 50.00, "time": "2024-08-18T17:30:00", "location": "Marina Pier 5", "description": "Enjoy breathtaking views of the sunset aboard a luxury yacht cruise.", "activityName": "Boating" },
-        { "name": "Wine and Cheese Tasting", "cost": 30.00, "time": "2024-09-05T19:00:00", "location": "Vineyard Estate", "description": "Indulge in a delightful evening of wine and cheese pairings at the vineyard.", "activityName": "Wine Tasting" },
-        { "name": "Haunted House Party", "cost": 25.00, "time": "2024-10-31T20:00:00", "location": "Creepy Manor", "description": "Embark on a spine-chilling tour through a haunted mansion filled with ghostly surprises.", "activityName": "Party" },
-        { "name": "Salsa Dancing Night", "cost": 15.00, "time": "2024-11-15T21:00:00", "location": "Latin Club", "description": "Put on your dancing shoes and join us for a night of energetic salsa dancing.", "activityName": "Dancing" },
-        { "name": "Christmas Market Stroll", "cost": 0.00, "time": "2024-12-10T16:00:00", "location": "Downtown Square", "description": "Experience the festive atmosphere of the holiday market with festive treats and crafts.", "activityName": "Stroll" },
-        { "name": "New Year's Eve Gala", "cost": 150.00, "time": "2024-12-31T20:00:00", "location": "Grand Ballroom", "description": "Welcome the new year in style with live music, gourmet dinner, and champagne toast.", "activityName": "Party" },
-        { "name": "Fitness Bootcamp", "cost": 20.00, "time": "2025-01-15T07:00:00", "location": "City Park", "description": "Kickstart your fitness journey with a high-intensity bootcamp workout in the park.", "activityName": "Exercise" },
-        { "name": "Film Festival Screening", "cost": 12.00, "time": "2025-02-20T19:30:00", "location": "Cinema Plaza", "description": "Discover independent films and international cinema at the annual film festival.", "activityName": "Movies" },
-        { "name": "Tech Conference", "cost": 300.00, "time": "2025-03-10T09:00:00", "location": "Convention Center", "description": "Explore the latest trends in technology and network with industry professionals at the conference.", "activityName": "Networking" },
-        { "name": "Spring Flower Festival", "cost": 0.00, "time": "2025-04-05T10:00:00", "location": "Botanical Gardens", "description": "Admire the vibrant blooms and participate in floral workshops at the annual flower festival.", "activityName": "Botanical Garden Visit" },
-        { "name": "Charity Gala Dinner", "cost": 100.00, "time": "2025-05-20T18:30:00", "location": "Luxury Hotel", "description": "Support a good cause and enjoy an elegant evening of dining and entertainment at the charity gala.", "activityName": "Charity" },
-        { "name": "Summer Music Festival", "cost": 75.00, "time": "2025-06-15T12:00:00", "location": "City Park", "description": "Groove to live music performances and indulge in delicious food truck offerings at the music festival.", "activityName": "Concert" },
-        { "name": "Cultural Food Fair", "cost": 10.00, "time": "2025-07-08T17:00:00", "location": "Ethnic Village", "description": "Sample culinary delights from around the world and enjoy cultural performances at the food fair.", "activityName": "Festival" },
-        { "name": "Summer Camp Adventure", "cost": 300.00, "time": "2025-08-02T09:00:00", "location": "Mountain Retreat", "description": "Embark on outdoor adventures, team-building activities, and campfire evenings at the summer camp.", "activityName": "Camping" },
-        { "name": "Backyard Movie Night", "cost": 0.00, "time": "2025-09-14T19:00:00", "location": "Sarah's House", "description": "Gather under the stars for a cozy movie night with popcorn and blankets in the backyard.", "activityName": "Movies" },
-        { "name": "Wine Tour and Tasting", "cost": 50.00, "time": "2025-10-20T11:00:00", "location": "Winery Trail", "description": "Explore scenic vineyards and savor exquisite wines on a guided wine tour.", "activityName": "Wine Tasting" },
-        { "name": "Hiking Expedition", "cost": 0.00, "time": "2025-11-12T08:00:00", "location": "Mountain Range", "description": "Embark on a challenging hike through breathtaking mountain trails and scenic vistas.", "activityName": "Hiking" },
-        { "name": "Christmas Carol Sing-Along", "cost": 5.00, "time": "2025-12-22T19:00:00", "location": "Community Center", "description": "Spread holiday cheer with a festive sing-along of beloved Christmas carols.", "activityName": "Community" },
+        { "name": "Birthday Bash", "cost": 200.00, "time": "2024-05-15T18:00:23Z", "location": "Central Park", "description": "Celebrate Sarah's birthday with food, drinks, and games in the park.", "activityName": "Picnic" },
+        { "name": "Summer BBQ Cookout", "cost": 100.00, "time": "2024-06-22T15:00:23Z", "location": "John's Backyard", "description": "Join us for a backyard barbecue with grilled favorites and fun outdoor games.", "activityName": "Cooking Class" },
+        { "name": "Art Exhibition Opening", "cost": 0.00, "time": "2024-07-10T19:00:23Z", "location": "Downtown Gallery", "description": "Explore new artworks by local artists at the gallery opening reception.", "activityName": "Art Gallery Hop" },
+        { "name": "Sunset Cruise", "cost": 50.00, "time": "2024-08-18T17:30:23Z", "location": "Marina Pier 5", "description": "Enjoy breathtaking views of the sunset aboard a luxury yacht cruise.", "activityName": "Boating" },
+        { "name": "Wine and Cheese Tasting", "cost": 30.00, "time": "2024-09-05T19:00:23Z", "location": "Vineyard Estate", "description": "Indulge in a delightful evening of wine and cheese pairings at the vineyard.", "activityName": "Wine Tasting" },
+        { "name": "Haunted House Party", "cost": 25.00, "time": "2024-10-31T20:00:23Z", "location": "Creepy Manor", "description": "Embark on a spine-chilling tour through a haunted mansion filled with ghostly surprises.", "activityName": "Party" },
+        { "name": "Salsa Dancing Night", "cost": 15.00, "time": "2024-11-15T21:00:23Z", "location": "Latin Club", "description": "Put on your dancing shoes and join us for a night of energetic salsa dancing.", "activityName": "Dancing" },
+        { "name": "Christmas Market Stroll", "cost": 0.00, "time": "2024-12-10T16:00:23Z", "location": "Downtown Square", "description": "Experience the festive atmosphere of the holiday market with festive treats and crafts.", "activityName": "Stroll" },
+        { "name": "New Year's Eve Gala", "cost": 150.00, "time": "2024-12-31T20:00:23Z", "location": "Grand Ballroom", "description": "Welcome the new year in style with live music, gourmet dinner, and champagne toast.", "activityName": "Party" },
+        { "name": "Fitness Bootcamp", "cost": 20.00, "time": "2025-01-15T07:00:23Z", "location": "City Park", "description": "Kickstart your fitness journey with a high-intensity bootcamp workout in the park.", "activityName": "Exercise" },
+        { "name": "Film Festival Screening", "cost": 12.00, "time": "2025-02-20T19:30:23Z", "location": "Cinema Plaza", "description": "Discover independent films and international cinema at the annual film festival.", "activityName": "Movies" },
+        { "name": "Tech Conference", "cost": 300.00, "time": "2025-03-10T09:00:23Z", "location": "Convention Center", "description": "Explore the latest trends in technology and network with industry professionals at the conference.", "activityName": "Networking" },
+        { "name": "Spring Flower Festival", "cost": 0.00, "time": "2025-04-05T10:00:23Z", "location": "Botanical Gardens", "description": "Admire the vibrant blooms and participate in floral workshops at the annual flower festival.", "activityName": "Botanical Garden Visit" },
+        { "name": "Charity Gala Dinner", "cost": 100.00, "time": "2025-05-20T18:30:23Z", "location": "Luxury Hotel", "description": "Support a good cause and enjoy an elegant evening of dining and entertainment at the charity gala.", "activityName": "Charity" },
+        { "name": "Summer Music Festival", "cost": 75.00, "time": "2025-06-15T12:00:23Z", "location": "City Park", "description": "Groove to live music performances and indulge in delicious food truck offerings at the music festival.", "activityName": "Concert" },
+        { "name": "Cultural Food Fair", "cost": 10.00, "time": "2025-07-08T17:00:23Z", "location": "Ethnic Village", "description": "Sample culinary delights from around the world and enjoy cultural performances at the food fair.", "activityName": "Festival" },
+        { "name": "Summer Camp Adventure", "cost": 300.00, "time": "2025-08-02T09:00:23Z", "location": "Mountain Retreat", "description": "Embark on outdoor adventures, team-building activities, and campfire evenings at the summer camp.", "activityName": "Camping" },
+        { "name": "Backyard Movie Night", "cost": 0.00, "time": "2025-09-14T19:00:23Z", "location": "Sarah's House", "description": "Gather under the stars for a cozy movie night with popcorn and blankets in the backyard.", "activityName": "Movies" },
+        { "name": "Wine Tour and Tasting", "cost": 50.00, "time": "2025-10-20T11:00:23Z", "location": "Winery Trail", "description": "Explore scenic vineyards and savor exquisite wines on a guided wine tour.", "activityName": "Wine Tasting" },
+        { "name": "Hiking Expedition", "cost": 0.00, "time": "2025-11-12T08:00:23Z", "location": "Mountain Range", "description": "Embark on a challenging hike through breathtaking mountain trails and scenic vistas.", "activityName": "Hiking" },
+        { "name": "Christmas Carol Sing-Along", "cost": 5.00, "time": "2025-12-22T19:00:23Z", "location": "Community Center", "description": "Spread holiday cheer with a festive sing-along of beloved Christmas carols.", "activityName": "Community" },
     ]
 
     //make activities
-    for (let i = 0; i < activityArr.length; i++) {
-        await prisma.activity.create({
-            data: {
-                name: activityArr[i].name,
-                outdoors: activityArr[i].outdoors,
-                indoors: activityArr[i].indoors,
-                timeSensitive: activityArr[i].timeSensitive,
-                weatherDependent: activityArr[i].weatherDependent,
-            }
-        })
+    for (const activity of activityArr) {
+        try {
+            // Your Prisma create call here, e.g.,
+            // await prisma.activity.create({ data: activity });
+            await prisma.activity.create({
+                data: {
+                    name: activity.name,
+                    outdoors: activity.outdoors,
+                    indoors: activity.indoors,
+                    timeSensitive: activity.timeSensitive,
+                    weatherDependent: activity.weatherDependent,
+                }
+            })
+        } catch (error) {
+            console.error(`Error inserting activity: ${activity.name}`, error);
+        }
     }
+    // for (let i = 0; i < activityArr.length; i++) {
+    //     console.log(activityArr[i].name)
+    //     await prisma.activity.create({
+    //         data: {
+    //             name: activityArr[i].name,
+    //             outdoors: activityArr[i].outdoors,
+    //             indoors: activityArr[i].indoors,
+    //             timeSensitive: activityArr[i].timeSensitive,
+    //             weatherDependent: activityArr[i].weatherDependent,
+    //         }
+    //     })
+    // }
     //make experiences
     for (let i = 0; i < experienceArr.length; i++) {
         await prisma.experience.create({

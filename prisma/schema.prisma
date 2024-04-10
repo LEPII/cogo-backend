@@ -97,7 +97,7 @@ model FriendInvite {
 }
 
 model Activity {
-  name             String       @unique
+  name             String       @id
   outdoors         Boolean
   indoors          Boolean
   timeSensitive    Boolean
