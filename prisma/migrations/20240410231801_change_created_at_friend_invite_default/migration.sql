@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "FriendInvite" ALTER COLUMN "createdAt" SET DEFAULT CURRENT_TIMESTAMP;

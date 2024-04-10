@@ -82,9 +82,9 @@ model TripInvite {
 
 model FriendInvite {
   id         String   @id @default(cuid())
-  pending    Boolean
-  accepted   Boolean
-  createdAt  DateTime
+  pending    Boolean  @default(true)
+  accepted   Boolean  @default(false)
+  createdAt  DateTime @default(now())
   senderId   String
   sender     User     @relation("FriendInviteSender", fields: [senderId], references: [id])
   receiverId String
