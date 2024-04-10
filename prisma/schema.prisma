@@ -67,6 +67,8 @@ model Trip {
   friendsOnly        Boolean
   chatId             String
   chat               Chat         @relation(fields: [chatId], references: [id])
+  members            Json
+  name               String
   TripInvite         TripInvite[]
 }
 
