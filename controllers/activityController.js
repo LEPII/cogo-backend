@@ -46,5 +46,4 @@ export async function getSomeActivities(req, res) {
     } finally {
         await prisma.$disconnect();
     }
-    res.status(200).json(userActivities)
 }

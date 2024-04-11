@@ -43,3 +43,18 @@ export async function createFriendInvite(req, res) {
         await prisma.$disconnect();
     }
 }
+
+export async function acceptFriendInvite(req, res) {
+    const userId = req.body.userId
+    if (!userId) {
+        return res.status(404).json('no user id provided')
+    }
+    try {
+
+    } catch (e) {
+        console.log(e)
+        return res.status(404).json(e)
+    } finally {
+        await prisma.$disconnect();
+    }
+}
