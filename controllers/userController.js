@@ -3,13 +3,15 @@ const prisma = new PrismaClient();
 
 export async function getUserInfo(req, res) {
     const userEmail = req.query.userEmail
-    if (!userEmail) {
-        return res.status(404).json("No email provided")
+    const userPassword = req.query.userPassword
+    if (!userEmail || !userPassword) {
+        return res.status(404).json("No email or password provided")
     }
     try {
-        const user = await prisma.user.findUnique({
+        const user = await prisma.user.findUniqueOrThrow({
             where: {
-                email: userEmail
+                email: userEmail,
+                password: userPassword
             }
         })
         if (!user) {

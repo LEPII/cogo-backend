@@ -35,7 +35,62 @@ export async function createTripInvite(req, res) {
                 tripId
             }
         })
-        return res.status(200).json('route is working')
+        return res.status(200).json('trip invite made successfully')
+    } catch (e) {
+        return res.status(404).json(e)
+    } finally {
+        await prisma.$disconnect();
+    }
+}
+
+export async function acceptTripInvite(req, res) {
+    const tripInviteId = req.body.tripInviteId
+    if (!tripInviteId) {
+        return res.status(404).send('trip invite id is missing')
+    }
+    try {
+        const tripInviteFound = await prisma.tripInvite.findUnique({
+            where: {
+                id: tripInviteId
+            }
+        })
+        if (!tripInviteFound) {
+            return res.status(404).json('no such invite exists')
+        }
+        await prisma.tripInvite.update({
+            where: {
+                id: tripInviteId,
+            },
+            data: {
+                accepted: true, // Set 'accepted' to true
+                pending: false, // Set 'pending' to false
+            },
+        });
+        await prisma.tripMember.create({
+            data: {
+                tripId: tripInviteFound.tripId,
+                userId: tripInviteFound.receiverId,
+            }
+        })
+        const foundTrip = await prisma.trip.findUnique({
+            where: {
+                id: tripInviteFound.tripId
+            }
+        })
+        if (!foundTrip) {
+            return res.status(404).json('No such trip exists');
+        }
+        const currentMembers = foundTrip.members || [];
+        const updatedMembers = [...currentMembers, tripInviteFound.receiverId];
+        await prisma.trip.update({
+            where: {
+                id: tripInviteFound.tripId,
+            },
+            data: {
+                members: updatedMembers,
+            },
+        });
+        return res.status(200).json('invite accepted')
     } catch (e) {
         return res.status(404).json(e)
     } finally {
