@@ -21,7 +21,20 @@ export async function getUserTripInvites(req, res) {
 }
 
 export async function createTripInvite(req, res) {
+    const senderId = req.body.senderId
+    const receiverId = req.body.receiverId
+    const tripId = req.body.tripId
+    if (!senderId || !receiverId || !tripId) {
+        return res.status(404).send('sender receiver or trip id is missing')
+    }
     try {
+        await prisma.tripInvite.create({
+            data: {
+                senderId,
+                receiverId,
+                tripId
+            }
+        })
         return res.status(200).json('route is working')
     } catch (e) {
         return res.status(404).json(e)
