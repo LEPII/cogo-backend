@@ -12,6 +12,7 @@ export async function findEvents(req, res) {
 
     const keyword = body.keyword; //keyword
     const radius = body.radius; //radius
+    const calendarDate = body.date;
 
     if (radius < 5 || radius > 25) {
         res.status(400).json("Invalid Radius")
@@ -61,7 +62,18 @@ export async function findPlace(req, res) {
     const search = body.search; //search
     const type = body.type;
     const radius = body.radius * 1600; //radius
-    
+    const budget = body.budget;
+    let totalBudget = 0
+    if (budget < 10) {
+        totalBudget = 1
+    }else if (budget < 20 ){
+        totalBudget = 2
+    }else if (budget < 50) {
+        totalBudget = 3
+    }else{
+        totalBudget = 4
+    }
+
     if (body.radius > 50) {
         return res.status(400).json("Over Radius Limit. Must be <= 50")
     }
@@ -71,12 +83,13 @@ export async function findPlace(req, res) {
         const result = await placesClient.placesNearby({
             params: {
                 key: process.env.mapsKey,
-                query: search,
+                name: search,
                 location: {
                     longitude: ANNEX["longitude"],
                     latitude: ANNEX["latitude"],
                 },
                 radius: radius,
+                budget: totalBudget,
                 type: type
             },
             timeout: 1000,
