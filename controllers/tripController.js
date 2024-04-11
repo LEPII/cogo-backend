@@ -30,13 +30,14 @@ export async function createTrip(req, res) {
     const experienceId = req.body.experienceId
     const friendsOnly = req.body.friendsOnly
     const members = req.body.members
-    console.log(typeof hostId)
+    // console.log(typeof hostId)
     if (!hostId || typeof budget === "string" || typeof capacity === "string" || !experienceId || typeof friendsOnly !== "boolean" || !name || !members) {
         return res.status(404).json('Insufficient or wrong information')
     }
     try {
+        let makeTrip;
         if (designatedDriverId) {
-            await prisma.trip.create({
+            makeTrip = await prisma.trip.create({
                 data: {
                     host: {
                         connect: {
@@ -61,7 +62,7 @@ export async function createTrip(req, res) {
                 }
             })
         } else {
-            await prisma.trip.create({
+            makeTrip = await prisma.trip.create({
                 data: {
                     host: {
                         connect: {
@@ -81,6 +82,12 @@ export async function createTrip(req, res) {
                 }
             })
         }
+        await prisma.tripMember.create({
+            data: {
+                tripId: makeTrip.id,
+                userId: hostId,
+            }
+        })
         return res.status(200).json('new trip made')
     } catch (e) {
         console.error(e)
