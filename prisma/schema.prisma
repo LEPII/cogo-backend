@@ -27,9 +27,10 @@ model User {
   DesignatedDriverRelation Trip[]         @relation("DesignatedDriverRelation")
   FriendInviteSender       FriendInvite[] @relation("FriendInviteSender")
   FriendInviteReceiver     FriendInvite[] @relation("FriendInviteReceiver")
-  TripInvite               TripInvite[]
   friends                  Json?
   tripMember               TripMember[]
+  TripInviteSender         TripInvite[]   @relation("TripInviteSender")
+  TripInviteReceiver       TripInvite[]   @relation("TripInviteReceiver")
 }
 
 model TripMember {
@@ -72,12 +73,16 @@ model Trip {
 }
 
 model TripInvite {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  tripId    String
-  trip      Trip     @relation(fields: [tripId], references: [id])
-  senderId  String
-  sender    User     @relation(fields: [senderId], references: [id])
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  pending    Boolean  @default(true)
+  accepted   Boolean  @default(false)
+  tripId     String
+  trip       Trip     @relation(fields: [tripId], references: [id])
+  senderId   String
+  sender     User     @relation(name: "TripInviteSender", fields: [senderId], references: [id])
+  receiverId String
+  receiver   User     @relation(name: "TripInviteReceiver", fields: [receiverId], references: [id])
 }
 
 model FriendInvite {
