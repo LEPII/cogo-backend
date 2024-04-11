@@ -36,14 +36,6 @@ export async function createUser(req, res) {
     const transportation = req.body.transportation
     const transportationCap = req.body.transportationCap
     const interests = req.body.interests
-    console.log(newUserEmail)
-    console.log(displayName)
-    console.log(location)
-    console.log(radius)
-    console.log(password)
-    console.log(typeof transportation)
-    console.log(transportationCap)
-    console.log(interests)
     if (!newUserEmail || !displayName || !location || !radius || !password || typeof transportation !== "boolean") {
         return res.status(404).json("Unsufficient user data provided")
     }
