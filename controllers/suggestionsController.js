@@ -45,7 +45,7 @@ export async function generateSuggestion (req, res) {
             .then((result) => {
                 return result.json()
             })
-        weatherCondition = weatherFetch["current"]["condition"]["text"];
+        const weatherCondition = weatherFetch["current"]["condition"]["text"];
         promptBody += `Take into consideration that the weather condition is ${weatherCondition}`
     } catch (e) {
         console.error(e)
