@@ -10,7 +10,10 @@ const ANNEX = {
 export async function findEvents(req, res) {
     const body = req.body;
 
-    const keyword = body.keyword || "public-holidays,conferences,expos,concerts,festivals,performing-arts,sports,community";
+    const categories = ['conferences','expos','concerts','festivals','performing-arts','sports', 'community']
+    const randomCategory = categories[Math.floor(Math.random() * categories.length)]
+
+    const category = body.category || randomCategory;
     const radius = body.radius || "25";
     const budget = body.budget || "100";
     const eventDate = body.date || new Date().toISOString().split("T")[0];
@@ -32,7 +35,7 @@ export async function findEvents(req, res) {
             ["active.gte", eventDate], //Date range start
             ["active.lte", future], // Date Range End
             ["brand-unsafe.exclude", "true"],
-            ["category", keyword], //Key Word e.g. Concert
+            ["category", category], //Key Word e.g. Concert
             ["deleted_reason", "cancelled,duplicate,invalid"],
             ["limit", "10"],
             ["sortby", "date"],
@@ -65,16 +68,14 @@ export async function findEvents(req, res) {
 export async function findPlace(req, res) {
     const body = req.body;
 
-    const types = ["art_gallery", "museum", "performing_arts_theater", "library", "amusement_park", "aquarium", "bowling_alley", "dog_park", "historical_landmark", "marina", "movie_theater", "national_park", "night_club", "park", "tourist_attraction", "zoo", "bakery", "bar", "cafe", "sandwich_shop", "spa", "restaurant", "book_store", "gym", "store"]
+    const types = ["art_gallery", "museum", "library", "amusement_park", "aquarium", "bowling_alley", "dog_park", "marina", "movie_theater", "national_park", "night_club", "park", "tourist_attraction", "zoo", "bakery", "bar", "cafe", "spa", "restaurant", "book_store", "gym", "store"]
     const randomType = types[Math.floor(Math.random() * types.length)];
 
-    const search = body.search; //search
     const type = body.type || randomType;
     const radius = body.radius * 1600 || 25 * 1600; //radius
-    const budget = body.budget || "20";
-
+    const budget = body.budget;
     let totalBudget = 0
-    if (budget == 0) {
+    if (!budget || budget == 0) {
         totalBudget = 0
     } else if (budget < 10) {
         totalBudget = 1
@@ -92,16 +93,15 @@ export async function findPlace(req, res) {
 
     try {
         const placesClient = new Client({});
-        const result = await placesClient.placesNearby({
+        const q = await placesClient.placesNearby({
             params: {
                 key: process.env.mapsKey,
-                name: search,
                 location: {
                     longitude: ANNEX["longitude"],
                     latitude: ANNEX["latitude"],
                 },
                 radius: radius,
-                budget: totalBudget,
+                maxPrice: totalBudget,
                 opennow: true,
                 type: type
             },
@@ -109,9 +109,22 @@ export async function findPlace(req, res) {
         }).then(r => {
             return r.data.results;
         })
-        // results.map( obj => {
-            
-        // })
+        const filteredQ= q.filter( place => place.user_ratings_total > 100 && place.rating >= 2.5)
+
+        if (!filteredQ.length) {
+            return res.status(300).json({ success: false })
+        }
+        const data = filteredQ[Math.floor(Math.random() * filteredQ.length)];
+
+        const result = {
+            success: true,
+            name: data.name || "",
+            rating: data.rating,
+            address: data.vicinity,
+            budget: budget,
+            type: type,
+        }
+
         return res.status(200).json(result)
 
     } catch (e) {
