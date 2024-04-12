@@ -6,5 +6,5 @@ import { generateText, generateSuggestion } from "../controllers/suggestionsCont
 
 router
     .route("/")
-    .get(generateSuggestion)
+    .post(generateSuggestion)
 export { router }

@@ -24,11 +24,13 @@ export async function generateText(req, res) {
 }
 
 export async function generateSuggestion (req, res) {
-    const preference1 = req.body.preference1;
-    const preference2 = req.body.preference2;
-    const preference3 = req.body.preference3;
+    const prefs = req.body.prefs || [];
+    let prefsString = ""
+    for (let i = 0; i < 3; i++){
+        prefsString += prefs + ", "
+    }
 
-    let promptBody = (preference1 && preference2 && preference3) ? `Suggest 5 "events" and 5 "activites" given someone's preference in [${preference1}] [${preference2}] [${preference3}]` : `Suggest 5 "events" and 5 "activities".`;
+    let promptBody = prefs.length ? `Suggest 5 "events" and 5 "activites" given someone's preference in [ ${prefs}]` : `Suggest 5 "events" and 5 "activities".`;
 
     const promptFormat = `
     Pick from the following keyword array for events: ['public-holidays','conferences','expos','concerts','festivals','performing-arts','sports', 'community']

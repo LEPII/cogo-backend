@@ -5,10 +5,10 @@ import { findEvents, findPlace } from "../controllers/mapsController.js";
 
 router
     .route("/findEvents")
-    .get(findEvents)
+    .post(findEvents)
 router
     .route("/findPlace")
-    .get(findPlace)
+    .post(findPlace)
     
 export { router }
 
