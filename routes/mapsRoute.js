@@ -4,7 +4,7 @@ const router = express.Router()
 import { findEvents, findPlace } from "../controllers/mapsController.js";
 
 router
-    .route("/events")
+    .route("/findEvents")
     .get(findEvents)
 router
     .route("/findPlace")

@@ -31,7 +31,7 @@ export async function generateSuggestion (req, res) {
     let promptBody = (preference1 && preference2 && preference3) ? `Suggest 5 "events" and 5 "activites" given someone's preference in [${preference1}] [${preference2}] [${preference3}]` : `Suggest 5 "events" and 5 "activities".`;
 
     const promptFormat = `
-    Pick from the following keyword array for events: ['academic','public-holidays','observances','politics','conferences','expos','concerts','festivals','performing-arts','sports', 'community']
+    Pick from the following keyword array for events: ['public-holidays','conferences','expos','concerts','festivals','performing-arts','sports', 'community']
     Pick from the following keyword array for activities: ["art_gallery","museum","performing_arts_theater","library","amusement_park","aquarium","bowling_alley","dog_park","historical_landmark","marina","movie_theater","national_park","night_club","park","tourist_attraction","zoo","bakery","bar","cafe","restaurant","sandwich_shop","spa","book_store","gym","store"]
     Generate a fun title for each as though they are chapters in a book.
     Generate a brief description that matches the keyword and title and encourage the user to go out.
