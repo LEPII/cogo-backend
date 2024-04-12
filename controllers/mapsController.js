@@ -26,9 +26,10 @@ export async function findEvents(req, res) {
     const body = req.body;
 
     const categories = ['conferences', 'expos', 'concerts', 'festivals', 'performing-arts', 'sports', 'community']
+    const allCategories = 'conferences,expos,concerts,festivals,performing-arts,sports,community'
     const randomCategory = categories[Math.floor(Math.random() * categories.length)]
 
-    const category = body.category || randomCategory;
+    const category = body.category || allCategories;
     const radius = body.radius || 50;
     const budget = body.budget || 100;
     const eventDate = body.date || new Date().toISOString().split("T")[0];
