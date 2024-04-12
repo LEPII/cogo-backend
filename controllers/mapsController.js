@@ -14,8 +14,8 @@ export async function findEvents(req, res) {
     const randomCategory = categories[Math.floor(Math.random() * categories.length)]
 
     const category = body.category || randomCategory;
-    const radius = body.radius || "25";
-    const budget = body.budget || "100";
+    const radius = body.radius || 50;
+    const budget = body.budget || 100;
     const eventDate = body.date || new Date().toISOString().split("T")[0];
 
     if (radius < 5 || radius > 50) {
@@ -49,7 +49,7 @@ export async function findEvents(req, res) {
             }
         }
 
-        const result = await fetch(predictUrl,
+        const results = await fetch(predictUrl,
             {
                 method: "GET",
                 headers: {
@@ -57,6 +57,22 @@ export async function findEvents(req, res) {
                 }
             }
         )
+        const resultsJson = await result.json(); 
+        if (!resultsJson.count){
+            return res.status(300).json({ success: false })
+        }
+
+        const data = resultsJson.results[Math.floor(Math.random() * results.length)];
+
+        const result = {
+            success: true,
+            name: data.name,
+            rating: data.rating,
+            address: data.vicinity,
+            budget: budget,
+            type: type,
+        }
+
         res.status(200).json(await result.json())
     } catch (e) {
         console.error(e)
@@ -72,14 +88,14 @@ export async function findPlace(req, res) {
     const randomType = types[Math.floor(Math.random() * types.length)];
 
     const type = body.type || randomType;
-    const radius = body.radius * 1600 || 25 * 1600; //radius
-    const budget = body.budget;
+    const radius = body.radius * 1600 || 50 * 1600; //radius
+    const budget = body.budget || 0;
     let totalBudget = 0
-    if (!budget || budget == 0) {
+    if (budget == 0) {
         totalBudget = 0
     } else if (budget < 10) {
         totalBudget = 1
-    } else if (budget < 20) {
+    } else if (budget < 25) {
         totalBudget = 2
     } else if (budget < 50) {
         totalBudget = 3
@@ -118,7 +134,7 @@ export async function findPlace(req, res) {
 
         const result = {
             success: true,
-            name: data.name || "",
+            name: data.name,
             rating: data.rating,
             address: data.vicinity,
             budget: budget,
