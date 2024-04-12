@@ -58,9 +58,9 @@ export async function generateSuggestion (req, res) {
         const result = await model.generateContent(promptBody);
         const response = await result.response;
         const text = response.text()
-        res.status(200).json(JSON.parse(text))
+        res.status(200).json({success:true, data: JSON.parse(text)})
     } catch (e) {
         console.error(e)
-        return res.status(500).send("There's been an error")
+        return res.status(500).send({success:false, error: e})
     }
 }
