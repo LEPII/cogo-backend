@@ -55,10 +55,10 @@ export async function generateSuggestion(req, res) {
             const model = genAI.getGenerativeModel({ model: "gemini-pro" });
             promptBody += promptFormat;
             const result = await model.generateContent(promptBody);
-            const response = await result.response;
+            const response = result.response;
             const text = response.text();
-            console.log(text)
-            if(!text) {
+            // console.log(text)
+            if (!text) {
                 res.status(404).json('Error fetching text')
             }
             res.status(200).json({ success: true, data: JSON.parse(text) });
