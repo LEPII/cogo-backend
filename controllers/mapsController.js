@@ -6,23 +6,38 @@ const ANNEX = {
     latitude: 25.822600,
     longitude: -80.280330,
 }
+
+const findAddress = async (lat, lng) => {
+    const mapsClient = new Client({});
+    const address = await mapsClient.reverseGeocode({
+        params: {
+            key: process.env.mapsKey,
+            latlng: {
+                lat: lat,
+                lng: lng
+            }
+        }
+    })
+    return address;
+}
+
 // Predict HQ API Search Events by Radius
 export async function findEvents(req, res) {
     const body = req.body;
 
-    const categories = ['conferences','expos','concerts','festivals','performing-arts','sports', 'community']
+    const categories = ['conferences', 'expos', 'concerts', 'festivals', 'performing-arts', 'sports', 'community']
     const randomCategory = categories[Math.floor(Math.random() * categories.length)]
 
-    const category = body.category || randomCategory;
+    const category = body.category || "concerts";
     const radius = body.radius || 50;
     const budget = body.budget || 100;
     const eventDate = body.date || new Date().toISOString().split("T")[0];
 
     if (radius < 5 || radius > 50) {
-        res.status(400).json("Invalid Radius")
+        res.status(400).json({ success: false, error: "Invalid radius" })
     }
     if (body.date && /\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/.test(calendarDate)) {
-        res.status(400).json("Invalid Date")
+        res.status(400).json({ success: false, error: "Invalid Date" })
     }
 
     let future = new Date()
@@ -49,7 +64,7 @@ export async function findEvents(req, res) {
             }
         }
 
-        const results = await fetch(predictUrl,
+        const q = await fetch(predictUrl,
             {
                 method: "GET",
                 headers: {
@@ -57,26 +72,27 @@ export async function findEvents(req, res) {
                 }
             }
         )
-        const resultsJson = await result.json(); 
-        if (!resultsJson.count){
-            return res.status(300).json({ success: false })
+        const results = await q.json();
+        if (!results.count) {
+            return res.status(300).json({ success: false, error: "No results" })
         }
 
-        const data = resultsJson.results[Math.floor(Math.random() * results.length)];
+        const eventDataArray = results.results;
+        const eventData = eventDataArray[Math.floor(Math.random() * eventDataArray.length)];
 
+        const eventAddress = await findAddress(eventData.location[1], eventData.location[0])
+        console.log(eventAddress)
         const result = {
             success: true,
-            name: data.name,
-            rating: data.rating,
-            address: data.vicinity,
+            name: eventData.title,
+            address: eventAddress.status == 200 ? eventAddress.data.results[0].formatted_address : " ",
             budget: budget,
-            type: type,
+            type: category,
         }
-
-        res.status(200).json(await result.json())
+        return res.status(200).json(result)
     } catch (e) {
         console.error(e)
-        res.status(500).json("An error occurred")
+        res.status(500).json({success:false, error: e})
     }
 }
 
@@ -125,10 +141,10 @@ export async function findPlace(req, res) {
         }).then(r => {
             return r.data.results;
         })
-        const filteredQ= q.filter( place => place.user_ratings_total > 100 && place.rating >= 2.5)
+        const filteredQ = q.filter(place => place.user_ratings_total > 100 && place.rating >= 2.5)
 
         if (!filteredQ.length) {
-            return res.status(300).json({ success: false })
+            return res.status(300).json({ success: false, error: "No results" })
         }
         const data = filteredQ[Math.floor(Math.random() * filteredQ.length)];
 
@@ -145,6 +161,6 @@ export async function findPlace(req, res) {
 
     } catch (e) {
         console.error(e)
-        res.status(500).json("An error occurred")
+        res.status(500).json({success:false, error: e})
     }
 }
