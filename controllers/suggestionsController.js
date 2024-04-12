@@ -23,10 +23,10 @@ export async function generateText(req, res) {
     }
 }
 
-export async function generateSuggestion (req, res) {
+export async function generateSuggestion(req, res) {
     const prefs = req.body.prefs || [];
     let prefsString = ""
-    for (let i = 0; i < 3; i++){
+    for (let i = 0; i < 3; i++) {
         prefsString += prefs + ", "
     }
 
@@ -47,22 +47,26 @@ export async function generateSuggestion (req, res) {
         const weatherFetch = await fetch(weatherUrl)
             .then((result) => {
                 return result.json()
-            })
+            });
         const weatherCondition = weatherFetch["current"]["condition"]["text"];
-        promptBody += `Take into consideration that the weather condition is ${weatherCondition}`
-    } catch (e) {
-        console.error(e)
-    }
+        promptBody += `Take into consideration that the weather condition is ${weatherCondition}`;
 
-    try {
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" })
-        promptBody += promptFormat;
-        const result = await model.generateContent(promptBody);
-        const response = await result.response;
-        const text = response.text()
-        res.status(200).json({success:true, data: JSON.parse(text)})
+        try {
+            const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+            promptBody += promptFormat;
+            const result = await model.generateContent(promptBody);
+            const response = await result.response;
+            const text = response.text();
+            console.log(text)
+            if(!text) {
+                res.status(404).json('Error fetching text')
+            }
+            res.status(200).json({ success: true, data: JSON.parse(text) });
+        } catch (e) {
+            console.error(e);
+            return res.status(500).send({ success: false, error: e });
+        }
     } catch (e) {
-        console.error(e)
-        return res.status(500).send({success:false, error: e})
+        console.error(e);
     }
 }
