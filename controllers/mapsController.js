@@ -28,7 +28,7 @@ export async function findEvents(req, res) {
     const categories = ['conferences', 'expos', 'concerts', 'festivals', 'performing-arts', 'sports', 'community']
     const randomCategory = categories[Math.floor(Math.random() * categories.length)]
 
-    const category = body.category || "concerts";
+    const category = body.category || randomCategory;
     const radius = body.radius || 50;
     const budget = body.budget || 100;
     const eventDate = body.date || new Date().toISOString().split("T")[0];
@@ -81,7 +81,6 @@ export async function findEvents(req, res) {
         const eventData = eventDataArray[Math.floor(Math.random() * eventDataArray.length)];
 
         const eventAddress = await findAddress(eventData.location[1], eventData.location[0])
-        console.log(eventAddress)
         const result = {
             success: true,
             name: eventData.title,
@@ -92,7 +91,7 @@ export async function findEvents(req, res) {
         return res.status(200).json(result)
     } catch (e) {
         console.error(e)
-        res.status(500).json({success:false, error: e})
+        res.status(500).json({ success: false, error: e })
     }
 }
 
@@ -161,6 +160,6 @@ export async function findPlace(req, res) {
 
     } catch (e) {
         console.error(e)
-        res.status(500).json({success:false, error: e})
+        res.status(500).json({ success: false, error: e })
     }
 }
